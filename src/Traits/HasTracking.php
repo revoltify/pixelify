@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Cookie;
 
 trait HasTracking
 {
-    private const FBC_COOKIE_NAME = '_fbc';
+    private string $fbcCookieName = '_fbc';
+    
+    private string $fbpCookieName = '_fbp';
 
-    private const FBP_COOKIE_NAME = '_fbp';
-
-    private const COOKIE_LIFETIME = 7776000; // 90 days in seconds
+    private int $cookieLifetime = 7776000; // 90 days in seconds
 
     public function handleTracking(Request $request): void
     {
@@ -25,15 +25,15 @@ trait HasTracking
 
         if ($fbclid) {
             $formattedFbc = $this->formatFbc($fbclid);
-            Cookie::queue(self::FBC_COOKIE_NAME, $formattedFbc, self::COOKIE_LIFETIME);
+            Cookie::queue($this->fbcCookieName, $formattedFbc, $this->cookieLifetime);
         }
     }
 
     private function handleFbp(Request $request): void
     {
-        if (! $request->cookie(self::FBP_COOKIE_NAME)) {
+        if (! $request->cookie($this->fbcCookieName)) {
             $formattedFbp = $this->generateFbp();
-            Cookie::queue(self::FBP_COOKIE_NAME, $formattedFbp, self::COOKIE_LIFETIME);
+            Cookie::queue($this->fbpCookieName, $formattedFbp, $this->cookieLifetime);
         }
     }
 
