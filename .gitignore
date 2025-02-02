@@ -1,0 +1,12 @@
+# Composer Related
+composer.lock
+/vendor
+
+# Caches
+.phpunit.cache
+.phpunit.result.cache
+
+# Editors
+/.idea
+/.fleet
+/.vscode

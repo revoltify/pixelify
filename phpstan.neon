@@ -1,0 +1,16 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+    
+parameters:
+    treatPhpDocTypesAsCertain: false
+    
+    # Paths to analyze
+    paths:
+        - src
+
+    excludePaths:
+        - src/Traits/HasPixelifyUser.php
+        - src/Traits/HasPixelifyProduct.php
+
+    # Level of analysis (0 = basic, 9 = strict)
+    level: 5
