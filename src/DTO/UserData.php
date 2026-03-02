@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Revoltify\Pixelify\DTO;
 
 use Exception;
-use Illuminate\Support\Carbon;
-use InvalidArgumentException;
+use Illuminate\Support\Facades\Date;
 use Revoltify\Pixelify\Contracts\PixelifyUserInterface;
 
 final class UserData
@@ -24,12 +23,8 @@ final class UserData
         public ?string $country = null
     ) {}
 
-    public static function fromModel($model): self
+    public static function fromModel(PixelifyUserInterface $model): self
     {
-        if (! $model instanceof PixelifyUserInterface) {
-            throw new InvalidArgumentException('Model must implement PixelifyUserInterface');
-        }
-
         return new self(
             firstName: $model->getPixelFirstName(),
             lastName: $model->getPixelLastName(),
@@ -48,7 +43,6 @@ final class UserData
     {
         $data = $this->getHashedData();
 
-        // Add non-hashed parameters
         $this->addNonHashedData($data);
 
         return array_filter($data);
@@ -135,7 +129,7 @@ final class UserData
     private function normalizeDateOfBirth(string $dob): string
     {
         try {
-            return Carbon::parse($dob)->format('Ymd');
+            return Date::parse($dob)->format('Ymd');
         } catch (Exception) {
             return $dob;
         }

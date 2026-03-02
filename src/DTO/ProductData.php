@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Revoltify\Pixelify\DTO;
 
-use InvalidArgumentException;
 use Revoltify\Pixelify\Contracts\PixelifyProductInterface;
 
 final class ProductData
@@ -17,16 +16,11 @@ final class ProductData
         public int $quantity = 1,
         public string $currency = 'USD',
         public ?string $contentType = self::CONTENT_TYPE,
-        public ?array $contents = null,
-        public ?string $orderId = null,
+        public ?array $contents = null
     ) {}
 
-    public static function fromModel($model): self
+    public static function fromModel(PixelifyProductInterface $model): self
     {
-        if (! $model instanceof PixelifyProductInterface) {
-            throw new InvalidArgumentException('Model must implement PixelifyProductInterface');
-        }
-
         return new self(
             productId: $model->getPixelProductId(),
             price: $model->getPixelProductPrice(),
@@ -58,10 +52,6 @@ final class ProductData
                 'quantity' => $item['quantity'] ?? 1,
                 'item_price' => $item['price'] ?? null,
             ], $this->contents);
-        }
-
-        if ($this->orderId) {
-            $data['order_id'] = $this->orderId;
         }
 
         return array_filter($data, fn (float|string|int|array|null $value): bool => $value !== null);

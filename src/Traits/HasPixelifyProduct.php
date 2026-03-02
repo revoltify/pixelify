@@ -8,7 +8,7 @@ use Revoltify\Pixelify\DTO\ProductData;
 
 trait HasPixelifyProduct
 {
-    public function toPixelProduct(): ProductData
+    final public function toPixelProduct(): ProductData
     {
         return ProductData::fromModel($this);
     }
@@ -20,16 +20,16 @@ trait HasPixelifyProduct
 
     public function getPixelProductPrice(): float
     {
-        return (float) $this->price ?? 0;
+        return (float) $this->price ?? 0.00;
     }
 
     public function getPixelProductQuantity(): int
     {
-        return 1;
+        return (int) $this->quantity ?? 1;
     }
 
     public function getPixelProductCurrency(): string
     {
-        return $this->currency ?? 'BDT';
+        return $this->currency ?? 'USD';
     }
 }

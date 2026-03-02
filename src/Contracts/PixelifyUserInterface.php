@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Revoltify\Pixelify\Contracts;
 
+use Revoltify\Pixelify\DTO\UserData;
+
 interface PixelifyUserInterface
 {
+    public function toPixelUser(): UserData;
+
     public function getPixelEmail(): ?string;
 
     public function getPixelPhone(): ?string;

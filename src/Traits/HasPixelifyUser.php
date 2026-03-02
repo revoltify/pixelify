@@ -8,7 +8,7 @@ use Revoltify\Pixelify\DTO\UserData;
 
 trait HasPixelifyUser
 {
-    public function toPixelUser(): UserData
+    final public function toPixelUser(): UserData
     {
         return UserData::fromModel($this);
     }
