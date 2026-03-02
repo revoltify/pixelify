@@ -32,7 +32,7 @@ return [
     | Facebook Graph API version to use
     |
     */
-    'api_version' => 'v18.0',
+    'api_version' => 'v25.0',
 
     /*
     |--------------------------------------------------------------------------
