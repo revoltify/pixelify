@@ -135,6 +135,20 @@ Pixelify::purchase($productData, $userData);
 composer test
 ```
 
+## Contributing
+
+Thank you for considering contributing to the Pixelify package! We welcome all contributions, including bug reports, feature requests, and pull requests. 
+
+Please review existing issues and pull requests before submitting your own to avoid duplicates. When contributing code:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+If you discover any security-related issues, please email `info@revoltify.net` directly instead of using the issue tracker.
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
