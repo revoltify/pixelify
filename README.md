@@ -10,10 +10,16 @@ A Laravel package for easy integration with Facebook Conversion API to track var
 
 ## Installation
 
-You can install the package via composer:
+**For Laravel 11+**
 
 ```bash
-composer require revoltify/pixelify
+composer require revoltify/pixelify "^2.0"
+```
+
+**For Laravel 9+**
+
+```bash
+composer require revoltify/pixelify "^1.0"
 ```
 
 ## Configuration
