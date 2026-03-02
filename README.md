@@ -82,32 +82,23 @@ class Product extends Model implements PixelifyProductInterface
 ```php
 use Revoltify\Pixelify\Facades\Pixelify;
 
+$user = User::first();
+$product = Product::first();
+
 // Track page view
-Pixelify::pageView($user->toPixelUser());
+Pixelify::pageView($user);
 
 // Track view content
-Pixelify::viewContent(
-    $product->toPixelProduct(),
-    $user->toPixelUser()
-);
+Pixelify::viewContent($product, $user);
 
 // Track add to cart
-Pixelify::addToCart(
-    $product->toPixelProduct(),
-    $user->toPixelUser()
-);
+Pixelify::addToCart($product, $user);
 
 // Track initiate checkout
-Pixelify::initiateCheckout(
-    $product->toPixelProduct(),
-    $user->toPixelUser()
-);
+Pixelify::initiateCheckout($product, $user);
 
 // Track purchase
-Pixelify::purchase(
-    $product->toPixelProduct(),
-    $user->toPixelUser()
-);
+Pixelify::purchase($product, $user);
 ```
 
 ### Using DTOs Directly
