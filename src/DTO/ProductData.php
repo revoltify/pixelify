@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\DTO;
 
-class ProductData
+use InvalidArgumentException;
+use Revoltify\Pixelify\Contracts\PixelifyProductInterface;
+
+final class ProductData
 {
     public const CONTENT_TYPE = 'product';
 
@@ -16,37 +21,10 @@ class ProductData
         public ?string $orderId = null,
     ) {}
 
-    public function toArray(): array
-    {
-        $data = [
-            'content_ids' => is_array($this->productId) ? $this->productId : [$this->productId],
-            'content_type' => $this->contentType,
-            'value' => $this->price,
-            'currency' => $this->currency,
-            'num_items' => $this->quantity,
-        ];
-
-        if ($this->contents) {
-            $data['contents'] = array_map(function ($item) {
-                return [
-                    'id' => $item['id'],
-                    'quantity' => $item['quantity'] ?? 1,
-                    'item_price' => $item['price'] ?? null,
-                ];
-            }, $this->contents);
-        }
-
-        if ($this->orderId) {
-            $data['order_id'] = $this->orderId;
-        }
-
-        return array_filter($data, fn ($value) => $value !== null);
-    }
-
     public static function fromModel($model): self
     {
-        if (! $model instanceof \Revoltify\Pixelify\Contracts\PixelifyProductInterface) {
-            throw new \InvalidArgumentException('Model must implement PixelifyProductInterface');
+        if (! $model instanceof PixelifyProductInterface) {
+            throw new InvalidArgumentException('Model must implement PixelifyProductInterface');
         }
 
         return new self(
@@ -62,5 +40,30 @@ class ProductData
                 ],
             ]
         );
+    }
+
+    public function toArray(): array
+    {
+        $data = [
+            'content_ids' => is_array($this->productId) ? $this->productId : [$this->productId],
+            'content_type' => $this->contentType,
+            'value' => $this->price,
+            'currency' => $this->currency,
+            'num_items' => $this->quantity,
+        ];
+
+        if ($this->contents) {
+            $data['contents'] = array_map(fn (array $item): array => [
+                'id' => $item['id'],
+                'quantity' => $item['quantity'] ?? 1,
+                'item_price' => $item['price'] ?? null,
+            ], $this->contents);
+        }
+
+        if ($this->orderId) {
+            $data['order_id'] = $this->orderId;
+        }
+
+        return array_filter($data, fn (float|string|int|array|null $value): bool => $value !== null);
     }
 }

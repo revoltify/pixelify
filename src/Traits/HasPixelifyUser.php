@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Traits;
 
 use Revoltify\Pixelify\DTO\UserData;

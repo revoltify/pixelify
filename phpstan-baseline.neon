@@ -1,0 +1,13 @@
+parameters:
+	ignoreErrors:
+		-
+			rawMessage: Trait Revoltify\Pixelify\Traits\HasPixelifyProduct is used zero times and is not analysed.
+			identifier: trait.unused
+			count: 1
+			path: src/Traits/HasPixelifyProduct.php
+
+		-
+			rawMessage: Trait Revoltify\Pixelify\Traits\HasPixelifyUser is used zero times and is not analysed.
+			identifier: trait.unused
+			count: 1
+			path: src/Traits/HasPixelifyUser.php

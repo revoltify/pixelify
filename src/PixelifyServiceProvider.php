@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Revoltify\Pixelify\Commands\PixelifySetupCommand;
 use Revoltify\Pixelify\Contracts\PixelifyInterface;
+use Revoltify\Pixelify\Events\PixelEventOccurred;
 use Revoltify\Pixelify\Http\Client\FacebookClient;
 use Revoltify\Pixelify\Http\Middleware\FacebookTrackingMiddleware;
+use Revoltify\Pixelify\Listeners\SendPixelEvent;
 use Revoltify\Pixelify\Services\PixelifyService;
 
-class PixelifyServiceProvider extends ServiceProvider
+final class PixelifyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
@@ -21,14 +25,10 @@ class PixelifyServiceProvider extends ServiceProvider
         );
 
         // Register service
-        $this->app->singleton(PixelifyInterface::class, function ($app) {
-            return new PixelifyService;
-        });
+        $this->app->singleton(PixelifyInterface::class, fn ($app): PixelifyService => new PixelifyService);
 
         // Register Facebook client
-        $this->app->singleton(FacebookClient::class, function ($app) {
-            return new FacebookClient;
-        });
+        $this->app->singleton(FacebookClient::class, fn ($app): FacebookClient => new FacebookClient);
     }
 
     public function boot(): void
@@ -46,13 +46,13 @@ class PixelifyServiceProvider extends ServiceProvider
         }
 
         // Register Facebook tracking middleware to the 'web' middleware group
-        $kernel = $this->app->make(Kernel::class);
-        $kernel->appendMiddlewareToGroup('web', FacebookTrackingMiddleware::class);
+        // $kernel = $this->app->make(Kernel::class);
+        // $kernel->appendMiddlewareToGroup('web', FacebookTrackingMiddleware::class);
 
         // Register event listeners
         $this->app['events']->listen(
-            \Revoltify\Pixelify\Events\PixelEventOccurred::class,
-            \Revoltify\Pixelify\Listeners\SendPixelEvent::class
+            PixelEventOccurred::class,
+            SendPixelEvent::class
         );
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Contracts;
 
 use Revoltify\Pixelify\DTO\ProductData;

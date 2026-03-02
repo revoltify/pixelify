@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -14,7 +16,7 @@ use Revoltify\Pixelify\DTO\UserData;
  * @method static void initiateCheckout(ProductData $productData, ?UserData $userData = null)
  * @method static void purchase(ProductData $productData, ?UserData $userData = null)
  */
-class Pixelify extends Facade
+final class Pixelify extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

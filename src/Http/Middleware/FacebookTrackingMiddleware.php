@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Revoltify\Pixelify\Traits\HasTracking;
 use Symfony\Component\HttpFoundation\Response;
 
-class FacebookTrackingMiddleware
+final class FacebookTrackingMiddleware
 {
     use HasTracking;
 
@@ -15,7 +18,7 @@ class FacebookTrackingMiddleware
     {
         try {
             $this->handleTracking($request);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             //
         }
 

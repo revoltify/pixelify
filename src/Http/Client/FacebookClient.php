@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Http\Client;
 
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Revoltify\Pixelify\DTO\EventData;
 
-class FacebookClient
+final readonly class FacebookClient
 {
     private PendingRequest $client;
 

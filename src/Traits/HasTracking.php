@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Traits;
 
 use Illuminate\Http\Request;
@@ -8,7 +10,7 @@ use Illuminate\Support\Facades\Cookie;
 trait HasTracking
 {
     private string $fbcCookieName = '_fbc';
-    
+
     private string $fbpCookieName = '_fbp';
 
     private int $cookieLifetime = 7776000; // 90 days in seconds

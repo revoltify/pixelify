@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\DTO;
 
 use Illuminate\Support\Carbon;
 
-class EventData
+final class EventData
 {
     public const ACTION_SOURCE_WEBSITE = 'website';
 
@@ -28,12 +30,12 @@ class EventData
         ];
 
         // Add user data
-        if ($this->userData) {
+        if ($this->userData instanceof UserData) {
             $data['user_data'] = $this->userData->toArray();
         }
 
         // Add custom data from product
-        if ($this->productData) {
+        if ($this->productData instanceof ProductData) {
             $data['custom_data'] = $this->productData->toArray();
         }
 

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Commands;
 
 use Illuminate\Console\Command;
 
-class PixelifySetupCommand extends Command
+final class PixelifySetupCommand extends Command
 {
     protected $signature = 'pixelify:setup';
 

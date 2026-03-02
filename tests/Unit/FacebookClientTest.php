@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Revoltify\Pixelify\DTO\EventData;
@@ -7,13 +9,13 @@ use Revoltify\Pixelify\DTO\ProductData;
 use Revoltify\Pixelify\DTO\UserData;
 use Revoltify\Pixelify\Http\Client\FacebookClient;
 
-beforeEach(function () {
+beforeEach(function (): void {
     config()->set('pixelify.pixel_id', 'test_pixel_id');
     config()->set('pixelify.access_token', 'test_access_token');
     config()->set('pixelify.api_version', 'v18.0');
 });
 
-test('it sends event data to Facebook API', function () {
+test('it sends event data to Facebook API', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -34,11 +36,9 @@ test('it sends event data to Facebook API', function () {
 
     $response = $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
-        return $request->hasHeader('Content-Type', 'application/json')
-            && str_contains($request->url(), 'graph.facebook.com/v18.0/')
-            && str_contains($request->url(), '/events');
-    });
+    Http::assertSent(fn (Request $request): bool => $request->hasHeader('Content-Type', 'application/json')
+        && str_contains($request->url(), 'graph.facebook.com/v18.0/')
+        && str_contains($request->url(), '/events'));
 
     expect($response)
         ->toBeArray()
@@ -47,7 +47,7 @@ test('it sends event data to Facebook API', function () {
         ->toHaveKey('fbtrace_id');
 });
 
-test('it includes test event code when configured', function () {
+test('it includes test event code when configured', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -65,7 +65,7 @@ test('it includes test event code when configured', function () {
 
     $response = $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
+    Http::assertSent(function (Request $request): bool {
         $data = json_decode($request->body(), true);
 
         return isset($data['test_event_code'])
@@ -78,7 +78,7 @@ test('it includes test event code when configured', function () {
         ->toHaveKey('success');
 });
 
-test('it sends complete user data when provided', function () {
+test('it sends complete user data when provided', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -91,19 +91,19 @@ test('it sends complete user data when provided', function () {
         eventName: 'Purchase',
         eventId: 'test-123',
         userData: new UserData(
-            email: 'test@example.com',
-            phone: '+1234567890',
             firstName: 'John',
             lastName: 'Doe',
+            email: 'test@example.com',
+            phone: '+1234567890',
             city: 'New York',
-            country: 'US',
-            zipCode: '10001'
+            zipCode: '10001',
+            country: 'US'
         )
     );
 
     $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
+    Http::assertSent(function (Request $request): bool {
         $data = json_decode($request->body(), true);
         $userData = $data['data'][0]['user_data'] ?? null;
 
@@ -118,7 +118,7 @@ test('it sends complete user data when provided', function () {
     });
 });
 
-test('it sends event with debug mode enabled', function () {
+test('it sends event with debug mode enabled', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -142,7 +142,7 @@ test('it sends event with debug mode enabled', function () {
         ->toHaveKey('success');
 });
 
-test('it handles API error responses', function () {
+test('it handles API error responses', function (): void {
     Http::fake([
         '*' => Http::response([
             'error' => [
@@ -170,7 +170,7 @@ test('it handles API error responses', function () {
         ->toHaveKey('code');
 });
 
-test('it sends correct event time', function () {
+test('it sends correct event time', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -186,7 +186,7 @@ test('it sends correct event time', function () {
 
     $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
+    Http::assertSent(function (Request $request): bool {
         $data = json_decode($request->body(), true);
 
         return isset($data['data'][0]['event_time'])
@@ -195,7 +195,7 @@ test('it sends correct event time', function () {
     });
 });
 
-test('it sends correct custom data for products', function () {
+test('it sends correct custom data for products', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -217,7 +217,7 @@ test('it sends correct custom data for products', function () {
 
     $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
+    Http::assertSent(function (Request $request): bool {
         $data = json_decode($request->body(), true);
         $customData = $data['data'][0]['custom_data'] ?? null;
 
@@ -229,7 +229,7 @@ test('it sends correct custom data for products', function () {
     });
 });
 
-test('it uses correct API version from config', function () {
+test('it uses correct API version from config', function (): void {
     Http::fake([
         '*' => Http::response([
             'events_received' => 1,
@@ -247,7 +247,5 @@ test('it uses correct API version from config', function () {
 
     $client->sendEvent($eventData);
 
-    Http::assertSent(function (Request $request) {
-        return str_contains($request->url(), 'graph.facebook.com/v17.0/');
-    });
+    Http::assertSent(fn (Request $request): bool => str_contains($request->url(), 'graph.facebook.com/v17.0/'));
 });

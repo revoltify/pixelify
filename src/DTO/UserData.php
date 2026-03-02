@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\DTO;
 
+use Exception;
 use Illuminate\Support\Carbon;
+use InvalidArgumentException;
+use Revoltify\Pixelify\Contracts\PixelifyUserInterface;
 
-class UserData
+final class UserData
 {
     public function __construct(
         public ?string $firstName = null,
@@ -18,6 +23,26 @@ class UserData
         public ?string $zipCode = null,
         public ?string $country = null
     ) {}
+
+    public static function fromModel($model): self
+    {
+        if (! $model instanceof PixelifyUserInterface) {
+            throw new InvalidArgumentException('Model must implement PixelifyUserInterface');
+        }
+
+        return new self(
+            firstName: $model->getPixelFirstName(),
+            lastName: $model->getPixelLastName(),
+            email: $model->getPixelEmail(),
+            phone: $model->getPixelPhone(),
+            dateOfBirth: $model->getPixelDateOfBirth(),
+            gender: $model->getPixelGender(),
+            city: $model->getPixelCity(),
+            state: $model->getPixelState(),
+            zipCode: $model->getPixelZipCode(),
+            country: $model->getPixelCountryCode()
+        );
+    }
 
     public function toArray(): array
     {
@@ -111,14 +136,14 @@ class UserData
     {
         try {
             return Carbon::parse($dob)->format('Ymd');
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return $dob;
         }
     }
 
     private function normalizeGender(string $gender): string
     {
-        $gender = strtolower(trim($gender));
+        $gender = mb_strtolower(trim($gender));
 
         return match ($gender) {
             'female', 'f' => 'f',
@@ -134,33 +159,13 @@ class UserData
 
     private function normalizeZipCode(string $zipCode): string
     {
-        $normalized = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $zipCode));
+        $normalized = mb_strtolower((string) preg_replace('/[^a-zA-Z0-9]/', '', $zipCode));
 
         // For US zip codes, only use first 5 digits
         if (preg_match('/^\d{5,}$/', $normalized)) {
-            return substr($normalized, 0, 5);
+            return mb_substr($normalized, 0, 5);
         }
 
         return $normalized;
-    }
-
-    public static function fromModel($model): self
-    {
-        if (! $model instanceof \Revoltify\Pixelify\Contracts\PixelifyUserInterface) {
-            throw new \InvalidArgumentException('Model must implement PixelifyUserInterface');
-        }
-
-        return new self(
-            firstName: $model->getPixelFirstName(),
-            lastName: $model->getPixelLastName(),
-            email: $model->getPixelEmail(),
-            phone: $model->getPixelPhone(),
-            dateOfBirth: $model->getPixelDateOfBirth(),
-            gender: $model->getPixelGender(),
-            city: $model->getPixelCity(),
-            state: $model->getPixelState(),
-            zipCode: $model->getPixelZipCode(),
-            country: $model->getPixelCountryCode()
-        );
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Revoltify\Pixelify\Services;
 
 use Illuminate\Support\Str;
@@ -9,7 +11,7 @@ use Revoltify\Pixelify\DTO\ProductData;
 use Revoltify\Pixelify\DTO\UserData;
 use Revoltify\Pixelify\Events\PixelEventOccurred;
 
-class PixelifyService implements PixelifyInterface
+final class PixelifyService implements PixelifyInterface
 {
     public function viewContent(ProductData $productData, ?UserData $userData = null): void
     {

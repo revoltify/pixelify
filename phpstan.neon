@@ -1,16 +1,13 @@
 includes:
-    - ./vendor/larastan/larastan/extension.neon
-    
-parameters:
-    treatPhpDocTypesAsCertain: false
-    
-    # Paths to analyze
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+    - phpstan-baseline.neon
+
+parameters: 
     paths:
         - src
 
-    excludePaths:
-        - src/Traits/HasPixelifyUser.php
-        - src/Traits/HasPixelifyProduct.php
-
-    # Level of analysis (0 = basic, 9 = strict)
     level: 5
+
+    tmpDir: /tmp/phpstan
