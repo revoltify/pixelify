@@ -15,6 +15,8 @@ use Revoltify\Pixelify\DTO\UserData;
  * @method static void addToCart(ProductData $productData, ?UserData $userData = null)
  * @method static void initiateCheckout(ProductData $productData, ?UserData $userData = null)
  * @method static void purchase(ProductData $productData, ?UserData $userData = null)
+ *
+ * @see \Revoltify\Pixelify\Services\PixelifyService
  */
 final class Pixelify extends Facade
 {
