@@ -19,7 +19,7 @@
         "orchestra/testbench": "^9.16",
         "pestphp/pest": "^3.8.5",
         "laravel/pint": "^1.27.1",
-        "rector/rector": ">=2.3.8"
+        "driftingly/rector-laravel": "^2.1.9"
     },
     "autoload": {
         "psr-4": {
