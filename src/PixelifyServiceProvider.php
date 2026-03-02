@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Revoltify\Pixelify;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Revoltify\Pixelify\Commands\PixelifySetupCommand;
@@ -46,11 +47,11 @@ final class PixelifyServiceProvider extends ServiceProvider
         }
 
         // Register Facebook tracking middleware to the 'web' middleware group
-        // $kernel = $this->app->make(Kernel::class);
-        // $kernel->appendMiddlewareToGroup('web', FacebookTrackingMiddleware::class);
+        $kernel = $this->app->make(Kernel::class);
+        $kernel->appendMiddlewareToGroup('web', FacebookTrackingMiddleware::class);
 
         // Register event listeners
-        $this->app['events']->listen(
+        $this->app->make(Dispatcher::class)->listen(
             PixelEventOccurred::class,
             SendPixelEvent::class
         );

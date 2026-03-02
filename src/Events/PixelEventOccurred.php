@@ -10,7 +10,8 @@ use Revoltify\Pixelify\DTO\EventData;
 
 final class PixelEventOccurred
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public function __construct(public EventData $eventData) {}
 }

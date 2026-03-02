@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Revoltify\Pixelify\DTO;
 
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 final class EventData
 {
@@ -23,7 +23,7 @@ final class EventData
     {
         $data = [
             'event_name' => $this->eventName,
-            'event_time' => Carbon::now()->timestamp,
+            'event_time' => Date::now()->timestamp,
             'event_id' => $this->eventId,
             'event_source_url' => $this->eventSourceUrl ?? request()->url(),
             'action_source' => $this->actionSource,

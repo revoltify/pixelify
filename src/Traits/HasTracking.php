@@ -45,7 +45,7 @@ trait HasTracking
         $subdomainIndex = 1; // for example.com
         $creationTime = round(microtime(true) * 1000);
 
-        return "{$version}.{$subdomainIndex}.{$creationTime}.{$fbclid}";
+        return sprintf('%s.%d.%s.%s', $version, $subdomainIndex, $creationTime, $fbclid);
     }
 
     private function generateFbp(): string
@@ -55,6 +55,6 @@ trait HasTracking
         $creationTime = round(microtime(true) * 1000);
         $randomNumber = mt_rand(1000000000, 9999999999);
 
-        return "{$version}.{$subdomainIndex}.{$creationTime}.{$randomNumber}";
+        return sprintf('%s.%d.%s.%d', $version, $subdomainIndex, $creationTime, $randomNumber);
     }
 }
