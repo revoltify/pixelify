@@ -2,6 +2,9 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/revoltify/pixelify.svg?style=flat-square)](https://packagist.org/packages/revoltify/pixelify)
 [![Total Downloads](https://img.shields.io/packagist/dt/revoltify/pixelify.svg?style=flat-square)](https://packagist.org/packages/revoltify/pixelify)
+[![Tests](https://img.shields.io/github/actions/workflow/status/revoltify/pixelify/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/revoltify/pixelify/actions/workflows/run-tests.yml)
+[![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4.svg?style=flat-square&logo=php)](https://php.net)
+[![Laravel Version](https://img.shields.io/badge/Laravel-11%2B-FF2D20.svg?style=flat-square&logo=laravel)](https://laravel.com)
 
 A Laravel package for easy integration with Facebook Conversion API to track various events like ViewContent, PageView, AddToCart, InitiateCheckout, and Purchase.
 
