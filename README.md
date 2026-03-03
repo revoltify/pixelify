@@ -123,7 +123,7 @@ use Revoltify\Pixelify\Facades\Pixelify;
 
 $userData = new UserData(
     firstName: 'John',
-    lastName: 'Doe'
+    lastName: 'Doe',
     email: 'user@example.com',
     phone: '+1234567890',
 );
