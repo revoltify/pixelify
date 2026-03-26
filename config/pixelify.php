@@ -64,5 +64,5 @@ return [
     | which may impact performance if there are many events.
     |
     */
-    'queued_listener_mode' => env('FACEBOOK_QUEUED_LISTENER_MODE', true),
+    'queued_listener_mode' => env('FACEBOOK_QUEUED_LISTENER_MODE', false),
 ];
