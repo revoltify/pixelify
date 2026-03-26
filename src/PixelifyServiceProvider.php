@@ -35,11 +35,6 @@ final class PixelifyServiceProvider extends ServiceProvider
         $this->app->when(SendPixelEvent::class)
             ->needs('$isQueued')
             ->give(fn (): bool => (bool) config('pixelify.queued_listener_mode', true));
-
-        // Set FacebookTrackingMiddleware to use queued mode based on config
-        $this->app->when(FacebookTrackingMiddleware::class)
-            ->needs('$isQueued')
-            ->give(fn (): bool => (bool) config('pixelify.queued_listener_mode', true));
     }
 
     public function boot(): void
