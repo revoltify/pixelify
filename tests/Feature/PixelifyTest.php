@@ -15,7 +15,7 @@ use Revoltify\Pixelify\Listeners\SendPixelEvent;
 
 describe('queued mode', function (): void {
     beforeEach(function (): void {
-        config()->set('pixelify.queued_listener', true);
+        config()->set('pixelify.queued_listener_mode', true);
         Event::fake();
     });
 
@@ -74,7 +74,7 @@ describe('queued mode', function (): void {
 
 describe('sync mode', function (): void {
     beforeEach(function (): void {
-        config()->set('pixelify.queued_listener', false);
+        config()->set('pixelify.queued_listener_mode', false);
         Event::fake();
     });
 
