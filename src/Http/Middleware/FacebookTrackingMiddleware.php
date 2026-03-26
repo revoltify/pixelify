@@ -14,12 +14,16 @@ final class FacebookTrackingMiddleware
 {
     use HasTracking;
 
+    public function __construct(private readonly bool $isQueued) {}
+
     public function handle(Request $request, Closure $next): Response
     {
-        try {
-            $this->handleTracking($request);
-        } catch (Exception) {
-            //
+        if (! $this->isQueued) {
+            try {
+                $this->handleTracking($request);
+            } catch (Exception) {
+                //
+            }
         }
 
         return $next($request);
