@@ -21,6 +21,7 @@ final class FacebookTrackingMiddleware
         } catch (Exception) {
             //
         }
+
         return $next($request);
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Revoltify\Pixelify\Listeners;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Revoltify\Pixelify\Events\PixelEventOccurred;
 use Revoltify\Pixelify\Http\Client\FacebookClient;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 final readonly class SendPixelEvent implements ShouldQueue
 {

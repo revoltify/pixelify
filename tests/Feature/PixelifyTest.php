@@ -84,4 +84,3 @@ describe('middleware tracking', function (): void {
         expect(Cookie::queued('_fbp'))->not->toBeNull();
     })->with('listener modes');
 });
-
