@@ -30,11 +30,6 @@ final class PixelifyServiceProvider extends ServiceProvider
 
         // Register Facebook client
         $this->app->singleton(FacebookClient::class, fn ($app): FacebookClient => new FacebookClient);
-
-        // Set SendPixelEvent listener to use queued mode based on config
-        $this->app->when(SendPixelEvent::class)
-            ->needs('$isQueued')
-            ->give(fn (): bool => (bool) config('pixelify.queued_listener_mode', true));
     }
 
     public function boot(): void

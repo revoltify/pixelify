@@ -10,7 +10,7 @@ use Revoltify\Pixelify\Http\Client\FacebookClient;
 
 final readonly class SendPixelEvent implements ShouldQueue
 {
-    public function __construct(private FacebookClient $client, private bool $isQueued) {}
+    public function __construct(private FacebookClient $client) {}
 
     public function handle(PixelEventOccurred $event): void
     {
@@ -19,6 +19,6 @@ final readonly class SendPixelEvent implements ShouldQueue
 
     public function shouldQueue(PixelEventOccurred $event): bool
     {
-        return $this->isQueued;
+        return config()->boolean('pixelify.queued_listener_mode', false);
     }
 }
