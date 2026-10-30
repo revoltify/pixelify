@@ -29,7 +29,7 @@ final class PixelifyServiceProvider extends ServiceProvider
         $this->app->singleton(PixelifyInterface::class, fn ($app): PixelifyService => new PixelifyService);
 
         // Register Facebook client
-        $this->app->singleton(FacebookClient::class, fn ($app): FacebookClient => new FacebookClient);
+        $this->app->bind(FacebookClient::class, fn ($app): FacebookClient => new FacebookClient);
     }
 
     public function boot(): void
